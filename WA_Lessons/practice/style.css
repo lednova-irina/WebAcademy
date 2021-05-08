@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+
+  font-family: "Montserrat";
+  font-weight: normal;
+  font-style: normal;
+}
+
+a {
+  color: #fff;
+}
+
+a:hover,
+a:focus {
+  color: #e6e3c4;
+}
+
+:root {
+    color: #fff;
+    font-size: 14px;
+    line-height: 150%;
+  }
+
+.header {
+  background-image: url("images/bgc.jpg");
+}
+
+.header_wrapper {
+  max-width: 1110px;
+  margin: 0 auto;
+  padding: 30px 0 150px;
+}
+
+
+.header_address-line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.header_address-line address {
+  flex-grow: 0;
+  flex-basis: auto;
+  flex-shrink: 0;
+
+  font-weight: 500;
+  font-size: .9285rem;
+  font-style: normal;
+}
+.header_address-line a {
+  flex-grow: 0;
+  flex-basis: auto;
+  flex-shrink: 0;
+
+  font-weight: 400;
+  font-size: 14px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.header nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  display: flex;
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+}
+
+.header nav ul li {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0;
+
+  text-align: center;
+  padding: 11px 0 15px;
+}
+
+.header nav ul li:not(:first-child) {
+  border-left: 1px solid #ffffff;
+}
+
+.header nav ul li + li {
+    border-left: 1px solid #fff;
+}
+
+.header nav a {
+  text-decoration: none;
+  font-size: 1rem;
+}
