@@ -36,7 +36,6 @@
 
 body {
   margin: 0;
-
   font-family: "Montserrat", sans-serif;
   font-weight: normal;
   font-style: normal;
@@ -63,7 +62,6 @@ a:focus {
   background-repeat: no-repeat;
   background-position: center;
   background-color: #202020;
-  background-image: auto 100%;
   background-size: cover;
 
   display: flex;
@@ -359,7 +357,7 @@ a:focus {
   padding: 15px 30px;
   box-sizing: border-box;
 
-  font-size: 1.1428;
+  font-size: 1.1428rem;
 
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -395,7 +393,7 @@ a:focus {
 
 .degustation {
   background: #282828;
-  padding: 129px 24px 100px;
+  padding: 129px 54px 100px;
 
   display: flex;
   justify-content: center;
@@ -421,12 +419,14 @@ a:focus {
   content: "";
 
   position: absolute;
-  top: -69px;
-  left: -30px;
+  top: 0;
+  left: 0;
+  transform: translate(-11.53%, -26.54%);
 
-  width: 260px;
-  height: 260px;
-  background: url("images/left.jpg") center center no-repeat;
+  width: 23.42%;
+  aspect-ratio: 1;
+
+  background: #282828 url("images/left.jpg") center center no-repeat;
   background-size: contain;
 }
 
@@ -434,29 +434,34 @@ a:focus {
   content: "";
 
   position: absolute;
-  top: -65px;
-  right: -53px;
+  top: 0;
+  right: 0;
 
-  width: 260px;
-  height: 200px;
-  background: url("images/right.jpg") center center no-repeat;
+  transform: translate(20.38%, -32.5%);
+
+  width: 23.42%;
+  padding-top: 18.02%;
+  height: 0;
+
+  box-sizing: content-box;
+
+  background: #282828 url("images/right.jpg") center center no-repeat;
   background-size: contain;
 }
 
 .degustation_row {
+  position: relative;
   max-width: 539px;
   width: 100%;
-
-  text-align: center;
 }
 
 .degustation_title {
   position: absolute;
   top: 0;
   left: 50%;
-  transform: translateX(-50%) translateY(-3px) translateY(-50%);
+  transform: translateX(-50%) translateY(-1px) translateY(-50%);
 
-  width: 100%;
+  width: 45%;
   max-width: 490px;
 
   text-align: center;
@@ -464,4 +469,125 @@ a:focus {
   background: #282828;
 
   margin: 0;
+  padding: 0 4.5%;
+
+  box-sizing: border-box;
+
+  font-family: "Playfair Display", serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2.57rem;
+  line-height: 1.5;
+}
+
+.degustation_title::after {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -40px;
+
+  content: "";
+
+  width: 24%;
+  border-top: 1px solid #fff;
+}
+
+.degustation_row-description {
+  font-size: 1.1429rem;
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.degustation_label {
+  position: relative;
+
+  flex: 1 0 0;
+  gap: 30px;
+
+  display: block;
+  box-sizing: border-box;
+
+  border-bottom: 1px solid#fff;
+  padding: 0;
+  margin: 0;
+
+  font-weight: normal;
+  font-size: 0.9286rem;
+  color: #fff;
+}
+
+.degustation_label-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  transform: translateY(0);
+  transition: transform 0.6s;
+}
+
+.degustation_row-with-two-inputs {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.degustation_input {
+  width: 100%;
+
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  display: block;
+  box-sizing: border-box;
+
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  padding: 0 0 10px;
+}
+
+.degustation_input:focus {
+  outline: none;
+  border-color: #fff;
+}
+
+.text_color{
+  color:black;
+}
+
+.degustation_input:focus + .degustation_label-title {
+  transform: translateY(-100%) scale(0.7);
+}
+
+.degustation_row-actions {
+  margin-top: 50px;
+}
+
+.degustation_submit {
+  display: block;
+  width: 100%;
+  text-transform: uppercase;
+
+  font-family: inherit;
+  font-weight: normal;
+  font-size: 1.1428rem;
+
+  text-align: center;
+  color: #fff;
+  background: transparent;
+
+  border: 1px solid #fff;
+  padding: 15px;
+
+  box-sizing: border-box;
+  cursor: pointer;
+
+  transition: all 0.6s ease-in0s;
+  will-change: background-color, color;
+}
+
+.degustation_submit:hover {
+  background-color: #fff;
+  color: #282828;
 }
