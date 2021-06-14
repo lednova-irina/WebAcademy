@@ -1,6 +1,6 @@
 # Homework Lesson 7
 
-### [Tasks 1.3 & 3](https://github.com/lednova-irina/WebAcademy.git)
+### [Tasks 1.3](https://github.com/lednova-irina/WebAcademy.git)
 
 ### [Return the Missing Element](https://www.codewars.com/kata/reviews/52995cff9ce954dc50000a86/groups/60aecf9ea3a2cf0001e0ecd8)
 
