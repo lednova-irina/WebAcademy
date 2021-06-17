@@ -221,3 +221,5 @@ for (let row = 0; row < 3; row++) {
 render(board, boardRows);
 startGame();
 clearBoard(boardRows);
+
+
