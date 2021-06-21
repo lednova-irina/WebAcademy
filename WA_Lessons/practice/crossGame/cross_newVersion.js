@@ -122,8 +122,9 @@ function crossGame(user) {
   };
 
   this.step = function step(row, column) {
+    let isWent = false;
     if (this.status !== STARTED) {
-      return;
+      return isWent;
     }
 
     if (this.board[row][column] === EMPTY) {
@@ -136,6 +137,7 @@ function crossGame(user) {
 
       if (!win) {
         this.steps++;
+        isWent = true;
 
         if (this.steps === 9) {
           this.status = STANDOFF;
@@ -149,8 +151,11 @@ function crossGame(user) {
 
       if (this.status === STARTED && el === this.user) {
         setTimeout(this.autoMove.bind(this), 2000);
+
         // this.autoMove();
       }
+
+      return isWent;
     }
   };
 
@@ -287,13 +292,84 @@ function crossGame(user) {
     ].filter(checkHandler, this);
   };
 
+  this.getEmptySides = function () {
+    const checkHandler = function (cell) {
+      return this.board[cell.row][cell.column] === EMPTY;
+    };
+    return [
+      { column: 1, row: 0 },
+      { column: 0, row: 1 },
+      { column: 2, row: 1 },
+      { column: 1, row: 2 },
+    ].filter(checkHandler, this);
+  };
+
+  this.moveToRandomCell = function (cells) {
+    const randomCell = cells[Math.floor(Math.random() * cells.length)];
+    if (randomCell) {
+      return this.step(randomCell.row, randomCell.column);
+    }
+  };
+
+  this.moveToEmptyCorner = function (lastMove) {
+    //   const compareFunction = function (cell1, cell2) {
+    //     const distanceToCell1 = this.getDistanceBetweenCells(cell1, lastMove);
+    //   };
+
+    // const lastMove = this.stepHistory[this.stepHistory.length - 1];
+    const getDistanceToCell = this.getDistanceBetweenCells.bind(this, lastMove);
+    const compareFunction = function (cell1, cell2) {
+      const distanceToCell1 = getDistanceToCell(cell1);
+      const distanceToCell2 = getDistanceToCell(cell2);
+
+      //   if (distanceToCell2 - distanceToCell1 < 0) {
+      //     return distanceToCell2 - distanceToCell1;
+      //   }
+      //   if (distanceToCell2 - distanceToCell1 > 0) {
+      //     return distanceToCell2 - distanceToCell1;
+      //   }
+      return distanceToCell2 - distanceToCell1;
+    };
+    const emptyCorners = this.getEmptyCorners()
+      .sort(compareFunction)
+      .filter(function (corner, idx, corners) {
+        return getDistanceToCell(corner) === getDistanceToCell(corners[0]);
+      });
+    return this.moveToRandomCell(emptyCorners);
+  };
+
+  this.checkIsCorner = function (cell) {
+    const corners = [
+      { column: 0, row: 0 },
+      { column: 2, row: 0 },
+      { column: 0, row: 2 },
+      { column: 2, row: 2 },
+    ];
+
+    return !!corners.find(function (corner) {
+      return corner.column === cell.column && corner.row === cell.row;
+    });
+  };
+
   this.autoMove = function () {
     const mySm = this.steps % 2 === 0 ? X : O;
-    const enemySm = this.steps % 2 === 1 ? X : O;
+    const enemySm = this.steps % 2 === 1 ? X : O; //user
 
     if (mySm === X && this.steps === 0) {
       return this.step(1, 1);
     }
+
+    if (mySm === O && this.steps === 1) {
+      //Если крестики сделали первый ход в угол, ответить ходом в центр.
+      if (this.board[1][1] === EMPTY) {
+        return this.step(1, 1);
+      }
+
+      // Если крестики сделали первый ход в центр, до конца игры ходить в любой угол, а если это невозможно — в любую клетку.
+      const emptyCorner = this.getEmptyCorners()[0];
+      return this.step(emptyCorner.row, emptyCorner.column);
+    }
+
     const lines = this.getLines();
 
     const myWinLine = lines.find(function (line) {
@@ -340,42 +416,94 @@ function crossGame(user) {
     }
 
     if (mySm === X) {
-      //   const compareFunction = function (cell1, cell2) {
-      //     const distanceToCell1 = this.getDistanceBetweenCells(cell1, lastMove);
-      //   };
-
       const lastMove = this.stepHistory[this.stepHistory.length - 1];
-      const getDistanceToCell = this.getDistanceBetweenCells.bind(
-        this,
-        lastMove
-      );
-      const compareFunction = function (cell1, cell2) {
-        const distanceToCell1 = getDistanceToCell(cell1);
-        const distanceToCell2 = getDistanceToCell(cell2);
-
-        //   if (distanceToCell2 - distanceToCell1 < 0) {
-        //     return distanceToCell2 - distanceToCell1;
-        //   }
-        //   if (distanceToCell2 - distanceToCell1 > 0) {
-        //     return distanceToCell2 - distanceToCell1;
-        //   }
-        return distanceToCell2 - distanceToCell1;
-      };
-
-      const emptyCorners = this.getEmptyCorners()
-        .sort(compareFunction)
-        .filter(function (corner, idx, corners) {
-          return getDistanceToCell(corner) === getDistanceToCell(corners[0]);
-        });
-      const randomCorner =
-        emptyCorners[Math.floor(Math.random * emptyCorners.length)];
-      if (randomCorner) {
-        return this.step(randomCorner.row, randomCorner.column);
+      const moveToCorner = this.moveToEmptyCorner(lastMove);
+      if (moveToCorner) {
+        return moveToCorner;
       }
 
       return this.randomMove();
     } else {
       // за нолики
+      if (
+        this.stepHistory[0].el === X &&
+        this.checkIsCorner(this.stepHistory[0])
+      ) {
+        //Следующим ходом занять угол, противоположный первому ходу крестиков, а если это невозможно — пойти на сторону.
+        const lastMove = this.stepHistory[0];
+        const moveToCorner = this.moveToEmptyCorner(lastMove);
+        if (moveToCorner) {
+          return moveToCorner;
+        } else {
+          const emptySides = this.getEmptySides();
+          if (emptySides.length > 0) {
+            return this.moveToRandomCell(emptySides);
+          }
+        }
+      }
+
+      //Если следующий ход крестиков — в угол, занять противоположный угол:
+      const lastStepHistory = this.stepHistory[this.stepHistory.length - 1];
+      if (lastStepHistory.el === X && this.checkIsCorner(lastStepHistory)) {
+        const moveToCorner = this.moveToEmptyCorner(lastStepHistory);
+        if (moveToCorner) {
+          return moveToCorner;
+        }
+      }
+
+      //Если следующий ход крестиков — на противоположную сторону, пойти в любой угол:
+      if (
+        this.stepHistory[2] &&
+        this.stepHistory[2].el === X &&
+        this.stepHistory[0].el
+      ) {
+        const distanceBetweenCells = this.getDistanceBetweenCells(
+          this.stepHistory[0],
+          this.stepHistory[2]
+        );
+        const areCellsOnOppositeSides = distanceBetweenCells === 4;
+        if (areCellsOnOppositeSides) {
+          const moveToCorner = this.moveToEmptyCorner(lastStepHistory);
+          if (moveToCorner) {
+            return moveToCorner;
+          }
+        }
+
+        //Если следующий ход крестиков — на сторону рядом с их первым ходом, пойти в угол рядом с обоими крестиками
+        const distanceBetweenNeighborCells = distanceBetweenCells === 2;
+        if (
+          distanceBetweenNeighborCells &&
+          !this.checkIsCorner(this.stepHistory[0]) &&
+          !this.checkIsCorner(this.stepHistory[2])
+        ) {
+          const compareFunction = function (cell1, cell2) {
+            const c11 = this.getDistanceBetweenCells(
+              this.stepHistory[0],
+              cell1
+            );
+            const c12 = this.getDistanceBetweenCells(
+              this.stepHistory[2],
+              cell1
+            );
+
+            const c21 = this.getDistanceBetweenCells(
+              this.stepHistory[0],
+              cell2
+            );
+            const c22 = this.getDistanceBetweenCells(
+              this.stepHistory[2],
+              cell2
+            );
+
+            return c11 + c12 - (c21 + c22);
+          };
+          const moveToCell = this.getEmptyCorners().sort(
+            compareFunction.bind(this)
+          )[0];
+
+          return this.step(moveToCell.row, moveToCell.column);
+        }
+      }
     }
     return this.randomMove();
   };
