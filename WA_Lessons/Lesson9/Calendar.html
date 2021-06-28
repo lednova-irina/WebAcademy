@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar</title>
+  <link rel="stylesheet" type="text/css" href="Calendar_gridVersion.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet" />
+  <script src="Calendar.js" defer></script>
+</head>
+
+<body>
+  <main class="day_schedule_view"></main>
+  <aside class="month_view">
+    <div class="month_picker">
+      <div class="month_header">
+        <button aria-label="Previous month" class="month_button month_button-previous">
+          <svg role="image" aria-label="" class="month__btn-image" viewBox="0 0 20 38">
+            <path d="M19 1L1 19L19 37" />
+          </svg>
+        </button>
+        <div class="month_title">March 2018</div>
+        <button aria-label="Next month" class="month_button month_button-next">
+          <svg role="image" aria-label="" class="month__btn-image month__btn-image--rotated" viewBox="0 0 20 38">
+            <path d="M19 1L1 19L19 37" />
+          </svg>
+        </button>
+      </div>
+      <div class="day_names-wrapper">
+        <ol class="day_names">
+          <li class="day_name">M</li>
+          <li class="day_name">T</li>
+          <li class="day_name">W</li>
+          <li class="day_name">T</li>
+          <li class="day_name">F</li>
+          <li class="day_name">Sat</li>
+          <li class="day_name">Sun</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="day_numbers-wrapper">
+      <ol class="day_numbers">
+
+      </ol>
+    </div>
+    <div class="categories">
+      <div class="categories_title">Your categories</div>
+      <div class="categories_wrapper">
+        <button class="categories_button button_color-purple">Finance</button>
+        <button class="categories_button button_color-orange">
+          Management
+        </button>
+        <button class="categories_button button_color-crimson">Design</button>
+      </div>
+    </div>
+  </aside>
+</body>
+
+</html>
