@@ -1,33 +1,44 @@
-function Timer({ autorun = false, controled = false }) {
+function Timer({ autorun = false, controlled = false, selector = "" }) {
   this.props = {
     autorun,
-    controled,
+    controlled,
+    selector,
   };
 
   this.state = {
-    run: autorun,
+    run: false,
     startTime: null,
     pauseTime: null,
   };
 
   this.creatBody();
+  this.render();
+
+  if (this.props.autorun) {
+    this.start();
+  }  
 }
 
 Timer.prototype.start = function () {
   if (!this.state.run) {
     this.state.run = true;
-    this.state.startTime = Date.now();
+
+    if (this.state.pauseTime) {
+      this.state.startTime = new Date() - this.state.pauseTime;
+    } else {
+      this.state.startTime = new Date();
+    }
+
     this.state.pauseTime = null;
 
     this.__renderIntervalID = setInterval(this.render.bind(this), 10);
-    this.render();
   }
 };
 
 Timer.prototype.pause = function () {
   if (this.state.run) {
     this.state.run = false;
-    this.state.pauseTime = Date.now();
+    this.state.pauseTime = new Date() - this.state.startTime;
 
     if (this.__renderIntervalID) {
       clearInterval(this.__renderIntervalID);
@@ -58,7 +69,7 @@ Timer.prototype.creatBody = function () {
   this.actions.pause.innerText = "Pause";
   this.actions.reset.innerText = "Reset";
 
-  if (this.props.controled) {
+  if (this.props.controlled) {
     this.timerBody.append(
       this.actions.start,
       this.actions.pause,
@@ -69,6 +80,8 @@ Timer.prototype.creatBody = function () {
     this.actions.pause.addEventListener("click", this.pause.bind(this));
     this.actions.reset.addEventListener("click", this.reset.bind(this));
   }
+  const timerPlace = document.querySelector(this.props.selector);
+  timerPlace.append(this.timerBody);
 };
 
 Timer.prototype.getCurrentTime = function () {
@@ -97,19 +110,12 @@ Timer.prototype.getCurrentTimeValue = function () {
 
 Timer.prototype.render = function () {
   this.timerValue.innerText = this.getCurrentTimeValue();
-
-  return this.timerBody;
 };
 
-const firstTimer = new Timer({ controled: true });
-const firstTimerPlace = document.querySelector(".firstTimer");
+new Timer({
+  autorun: true,
+  controlled: true,
+  selector: ".firstTimer",
+});
 
-firstTimerPlace.append(firstTimer.render());
-firstTimer.start();
-
-const secondTimer = new Timer({ controled: true });
-const secondTimerPlace = document.querySelector(".secondTimer");
-
-secondTimerPlace.append(secondTimer.render());
-secondTimer.start();
-
+new Timer({ controlled: true, selector: ".secondTimer" });
