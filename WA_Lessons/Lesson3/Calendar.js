@@ -38,7 +38,25 @@ Calendar.prototype.renderCalendar = function () {
   this.calculateDaysOfPrevMonth();
   this.renderDates();
   this.renderHeader();
+};
 
+Calendar.prototype.getAmountOfDaysForCurrentMonth = function () {
+  return this.getDateOfCurrentMonth(0, 1).getDate();
+};
+
+Calendar.prototype.getFirstDayOfCurrentMonth = function () {
+  return this.getDateOfCurrentMonth(1).getDay();
+};
+
+Calendar.prototype.getDateOfCurrentMonth = function (
+  dayNumber,
+  monthShift = 0
+) {
+  return new Date(
+    this.state.currentCalendarDate.getFullYear(),
+    this.state.currentCalendarDate.getMonth() + monthShift,
+    dayNumber
+  );
 };
 
 Calendar.prototype.renderHeader = function () {
@@ -50,6 +68,20 @@ Calendar.prototype.renderHeader = function () {
   headerEl.innerHTML = calendarHeader;
 };
 
+Calendar.prototype.renderDate = function (date, container, className) {
+  const li = document.createElement("li");
+  const a = document.createElement("a");
+
+  if (className) {
+    li.classList.add(className);
+  }
+  li.appendChild(a);
+  container.appendChild(li);
+
+  a.innerHTML = date.getDate();
+  a.setAttribute("href", "#");
+};
+
 Calendar.prototype.renderDates = function () {
   // get needed amount of dates from the next month
 
@@ -58,44 +90,22 @@ Calendar.prototype.renderDates = function () {
 
   // get dates of the previous month
   for (let i = 0; i < this.state.daysOfPrevMonth.length; i++) {
-    const day = this.state.daysOfPrevMonth[i];
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    li.appendChild(a);
-    dateEl.appendChild(li);
-    li.classList.add("prev_month-day");
-
-    a.innerHTML = day.getDate();
-    a.setAttribute("href", "#");
+    this.renderDate(this.state.daysOfPrevMonth[i], dateEl, "prev_month-day");
   }
 
   // get dates of the current month
   for (let i = 0; i < this.state.daysOfCurrentMonth.length; i++) {
     const day = this.state.daysOfCurrentMonth[i];
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    li.appendChild(a);
-    dateEl.appendChild(li);
-
-    a.innerHTML = day.getDate();
-    a.setAttribute("href", "#");
-
     if (day.getTime() === this.state.currentDate.getTime()) {
-      li.classList.add("day-current");
+      this.renderDate(day, dateEl, "day-current");
+    } else {
+      this.renderDate(day, dateEl);
     }
   }
 
   // get dates of the next month
   for (let i = 0; i < this.state.daysOfNextMonth.length; i++) {
-    const day = this.state.daysOfNextMonth[i];
-    const li = document.createElement("li");
-    const a = document.createElement("a");
-    li.appendChild(a);
-    dateEl.appendChild(li);
-    li.classList.add("next_month-day");
-
-    a.innerHTML = day.getDate();
-    a.setAttribute("href", "#");
+    this.renderDate(this.state.daysOfNextMonth[i], dateEl, "next_month-day");
   }
 };
 
@@ -103,25 +113,13 @@ Calendar.prototype.calculateDaysOfPrevMonth = function () {
   // get needed amount of dates from the prev month
   this.state.daysOfPrevMonth = [];
 
-  const firstDayOfCurrentMonth = new Date(
-    this.state.currentCalendarDate.getFullYear(),
-    this.state.currentCalendarDate.getMonth(),
-    1
-  ).getDay();
+  const firstDayOfCurrentMonth = this.getFirstDayOfCurrentMonth();
   const startShift = (firstDayOfCurrentMonth + 6) % 7;
-  const lastDayOfPrevMonth = new Date(
-    this.state.currentCalendarDate.getFullYear(),
-    this.state.currentCalendarDate.getMonth(),
-    0
-  ).getDate();
+  const lastDayOfPrevMonth = this.getDateOfCurrentMonth(0).getDate();
 
   for (let j = startShift - 1; j >= 0; j--) {
     this.state.daysOfPrevMonth.push(
-      new Date(
-        this.state.currentCalendarDate.getFullYear(),
-        this.state.currentCalendarDate.getMonth() - 1,
-        lastDayOfPrevMonth - j
-      )
+      this.getDateOfCurrentMonth(lastDayOfPrevMonth - j, -1)
     );
   }
 };
@@ -130,20 +128,10 @@ Calendar.prototype.calculateDaysOfCurrentMonth = function () {
   // get needed amount of dates from the current month
   this.state.daysOfCurrentMonth = [];
 
-  const amountOfDays = new Date(
-    this.state.currentCalendarDate.getFullYear(),
-    this.state.currentCalendarDate.getMonth() + 1,
-    0
-  ).getDate();
+  const amountOfDays = this.getAmountOfDaysForCurrentMonth();
 
   for (let i = 1; i <= amountOfDays; i++) {
-    this.state.daysOfCurrentMonth.push(
-      new Date(
-        this.state.currentCalendarDate.getFullYear(),
-        this.state.currentCalendarDate.getMonth(),
-        i
-      )
-    );
+    this.state.daysOfCurrentMonth.push(this.getDateOfCurrentMonth(i));
   }
 };
 
@@ -151,28 +139,12 @@ Calendar.prototype.calculateDaysOfNextMonth = function () {
   // get needed amount of dates from the next month
   this.state.daysOfNextMonth = [];
 
-  const amountOfCurrDays = new Date(
-    this.state.currentCalendarDate.getFullYear(),
-    this.state.currentCalendarDate.getMonth() + 1,
-    0
-  ).getDate();
-
-  const firstDayOfCurrentMonth = new Date(
-    this.state.currentCalendarDate.getFullYear(),
-    this.state.currentCalendarDate.getMonth(),
-    1
-  ).getDay();
+  const amountOfDays = this.getAmountOfDaysForCurrentMonth();
+  const firstDayOfCurrentMonth = this.getFirstDayOfCurrentMonth();
   const amountOfPrevDays = (firstDayOfCurrentMonth + 6) % 7;
-
-  const amountOfNextDays = 42 - (amountOfCurrDays + amountOfPrevDays);
+  const amountOfNextDays = 42 - (amountOfDays + amountOfPrevDays);
   for (let j = 1; j <= amountOfNextDays; j++) {
-    this.state.daysOfNextMonth.push(
-      new Date(
-        this.state.currentCalendarDate.getFullYear(),
-        this.state.currentCalendarDate.getMonth() + 1,
-        j
-      )
-    );
+    this.state.daysOfNextMonth.push(this.getDateOfCurrentMonth(j, 1));
   }
 };
 
