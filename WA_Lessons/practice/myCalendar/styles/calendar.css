@@ -1,0 +1,377 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    align-items: stretch;
+  
+    font-family: "Roboto", sans-serif;
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /*added styles for month_view */
+  .month_view {
+    display: flex;
+    flex: 799 0 0;
+    flex-direction: column;
+  
+    background: rgba(42, 46, 65, 0.7);
+    padding: 0 4.37% 6% 4.11%;
+    /* padding-bottom 6% temporary*/
+  }
+  
+  .month_header {
+    padding: 84px 0;
+  
+    box-sizing: border-box;
+  
+    display: flex;
+    margin: 0 0 22px;
+  
+    position: relative;
+  }
+  .month_header::before,
+  .month_header::after,
+  .day_numbers-wrapper::before,
+  .day_numbers-wrapper::after {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+  
+    mix-blend-mode: normal;
+  
+    width: 100%;
+    height: 2px;
+  }
+  .month_header::before,
+  .day_numbers-wrapper::before {
+    background: #000000;
+    opacity: 0.17;
+  }
+  
+  .month_header::after,
+  .day_numbers-wrapper::after {
+    bottom: -2px;
+    background: #ffffff;
+    opacity: 0.13;
+  }
+  
+  .day_numbers-wrapper {
+    position: relative;
+    padding: 0 0 65px;
+  }
+  
+  .month_title {
+    flex: 1 0 0;
+    order: 2;
+  
+    font-size: 36px;
+    line-height: 1.166;
+  
+    text-align: center;
+  
+    color: #ffffff;
+  }
+  
+  .month_button {
+    flex: 0 0 20px;
+  
+    background: transparent;
+    border: 0;
+    padding: 0;
+  
+    cursor: pointer;
+  
+    color: #fff;
+  }
+  .month_button-previous {
+    order: 1;
+  }
+  .month__btn-image {
+    width: 100%;
+  
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  
+  .month_button-next {
+    order: 3;
+  }
+  
+  .month__btn-image--rotated {
+    transform: rotate(180deg);
+  }
+  
+  .day_names {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 120px;
+    align-items: center;
+  
+    margin: 20px 0 0;
+    padding: 0;
+  
+    list-style: none;
+  }
+  
+  .day_name {
+    font-size: 26px;
+    line-height: 1.1539;
+  
+    text-align: center;
+    color: #ffffff;
+  
+    mix-blend-mode: normal;
+    opacity: 0.6;
+  }
+  
+  .day_numbers {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 130px);
+  
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  .day_numbers > li {
+    display: grid;
+  
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .day_numbers a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    width: 100%;
+    box-sizing: border-box;
+    aspect-ratio: 1;
+  
+    text-decoration: none;
+    color: #ffffff;
+  
+    font-size: 29px;
+  
+    position: relative;
+  
+    z-index: 1;
+  }
+  
+  .day_numbers a::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  
+    display: block;
+  
+    content: "";
+    border-radius: 50%;
+    background: transparent;
+  
+    z-index: -1;
+  }
+  
+  .day_numbers a:hover::after,
+  .day-current a::after {
+    background: #3c82f9;
+  }
+  
+  .day_selected a::after {
+    background: #6495ed;
+  }
+  
+  .next_month-day,
+  .prev_month-day {
+    mix-blend-mode: normal;
+    opacity: 0.5;
+  }
+  
+   
+  .categories_wrapper {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .categories_button {
+    flex-basis: 47.65%;
+    height: 80px;
+    border-radius: 12px;
+    margin: 30px 0 0;
+    border: 0;
+  
+    text-transform: uppercase;
+    font-size: 22px;
+    line-height: 26px;
+    color: #ffffff;
+  }
+  
+  .button_color-purple {
+    background: #8576ed;
+  }
+  .button_color-orange {
+    background: #f39946;
+  }
+  .button_color-crimson {
+    background: #ff467e;
+  }
+  
+  /*added styles for day_schedule_view */
+  .day_schedule_view {
+    display: flex;
+    flex: 1535 0 0;
+    flex-direction: column;
+  
+    background: #ffffff;
+  
+    padding: 0 6.4% 0 6.2%;
+  }
+  
+  .schedule_header {
+    padding: 84px 0;
+  
+    display: flex;
+    width: 100%;
+    margin: 0;
+    position: relative;
+    justify-content: space-between;
+  }
+  
+  .schedule_view-title {
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    /* font-weight: 500; */
+    font-size: 36px;
+    line-height: 1.1666;
+    color: #243d6f;
+  
+    margin: 0;
+  }
+  
+  .schedule_header::before {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    content: "";
+  
+    mix-blend-mode: normal;
+  
+    width: 100%;
+    height: 2px;
+  
+    background: #f3f3f3;
+  }
+  
+  .schedule_view-body {
+    position: relative;
+    padding: 102px 0 0;
+  }
+  
+  .schedule_view-item {
+    display: grid;
+    grid-template-columns: 10% 90%;
+    grid-template-rows: repeat(24, 1fr);
+  }
+  
+  .schedule_view-time {
+    width: 10.8%;
+    height: 124px;
+  
+    font-family: "Roboto", sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 26px;
+    line-height: 1.1538;
+  
+    color: #a4b0c3;
+  }
+  
+  .schedule_view-description {
+    margin: 15px 0 0 40px;
+    content: "";
+  
+    mix-blend-mode: normal;
+  
+    width: 100%;
+    height: 2px;
+  
+    background: #f3f3f3;
+  }
+  
+  .schedule_button {
+    background: transparent;
+    border: 0;
+  
+    cursor: pointer;
+  
+    opacity: 30%;
+  }
+  .schedule_button-search {
+    padding: 0 25px 0 0;
+  }
+  
+  .schedule_view-events {
+    position: absolute;
+    top: 0;
+    left: var(--timeSpace);
+    right: 0;
+  
+    z-index: 1;
+  
+    /* width: 100%; */
+  
+    border-left: 6px solid var(--event-category-color);
+    background: var(--event-category-background);
+  
+    padding: 0 61px 0 74px;
+  
+    box-sizing: border-box;
+  
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 28px;
+    line-height: 33px;
+  
+    color: #243d6f;
+  
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  
+    --event-category-color: rgba(255, 70, 126, 1);
+    --event-category-background: rgba(255, 70, 126, 0.15);
+  }
+  
+  .schedule_view-event-management{
+    --event-category-color: rgb(243, 153, 70);
+    --event-category-background: rgba(243, 153, 70, 0.15);
+  }
+  
+  .schedule_view-event-finance{
+    --event-category-color: #8576ED;
+    --event-category-background: rgba(133, 118, 237, 0.15);
+  }
+  
+  .schedule_view-event-design{
+    --event-category-color: #FF467E;
+    --event-category-background: rgba(243, 153, 70, 0.15);
+  }
+  
+  /* .output{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+  } */

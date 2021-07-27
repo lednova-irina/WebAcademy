@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar</title>
+  <link rel="stylesheet" type="text/css" href="./styles/calendar.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="./src/shared/month.dictionary.js" type="module"></script>
+  <script src="./src/events/event.js" type="module"></script>
+  <script src="./src/events/events.store.js" type="module"></script>
+  <script src="./src/events/event.dialog.js" type="module"></script>
+  <script src="./src/schedule/schedule.js" type="module"></script>
+  <script src="./src/calendar/calendar.js" type="module"></script>
+  <script src="./src/app.js" type="module"></script>
+
+</head>
+
+<body>
+  <div id="dialog-form" title="Create new event">
+    <!-- <p class="validateTips">All form fields are required.</p> -->
+
+    <form class="event_form">
+      <fieldset>
+        <label for="startTime">Time</label>
+        <input type="time" name="startTime" id="startTime"  class="text ui-widget-content ui-corner-all">
+     
+        <label for="duration">Duration</label>
+        <input type="text" name="duration" id="duration" placeholder="00:00" class="text ui-widget-content ui-corner-all">
+
+        <label for="text">Description</label>
+        <input type="text" name="text" id="text" value="" placeholder="Put your description here"
+          class="text ui-widget-content ui-corner-all">
+          
+        <label for="category">Category</label>
+        <select required name="category" id="category">
+          <option value="management">Management</option>
+          <option value="finance">Finance</option>
+          <option value="design">Design</option>
+        </select>
+
+        <!-- Allow form submission with keyboard without duplicating the dialog button -->
+        <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+      </fieldset>
+    </form>
+  </div>
+
+  <main class="day_schedule_view">
+    <div class="schedule_header">
+      <h1 class="schedule_view-title"></h1>
+      <div class="schedule_view-buttons">
+        <button class="schedule_button ">
+          <img src="./assets/search.svg" width="36" height="36" alt="" class="schedule_button-search"> </button>
+        <button class="schedule_button ">
+          <img src="./assets/menu.svg" width="36" height="36" alt="" class="schedule_button-menu">
+          <!-- /*<img src="image.svg" width="200" height="200" alt="image description">*/ -->
+        </button>
+      </div>
+    </div>
+    <div class="schedule_view-body">
+      <div class="schedule_view-item">
+        <div class="schedule_view-events">
+          <!-- <div class="schedule_view-event-management"></div>
+          <div class="schedule_view-event-finance"></div>
+          <div class="schedule_view-event-design"></div> -->
+        </div>
+      </div>
+    </div>
+
+  </main>
+  <aside class="month_view">
+    <div class="month_picker">
+      <div class="month_header">
+        <button aria-label="Previous month" class="month_button month_button-previous">
+          <svg role="image" aria-label="" class="month__btn-image" viewBox="0 0 20 38">
+            <path d="M19 1L1 19L19 37" />
+          </svg>
+        </button>
+        <div class="month_title">March 2018</div>
+        <button aria-label="Next month" class="month_button month_button-next">
+          <svg role="image" aria-label="" class="month__btn-image month__btn-image--rotated" viewBox="0 0 20 38">
+            <path d="M19 1L1 19L19 37" />
+          </svg>
+        </button>
+      </div>
+      <div class="day_names-wrapper">
+        <ol class="day_names">
+          <li class="day_name">M</li>
+          <li class="day_name">T</li>
+          <li class="day_name">W</li>
+          <li class="day_name">T</li>
+          <li class="day_name">F</li>
+          <li class="day_name">Sat</li>
+          <li class="day_name">Sun</li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="day_numbers-wrapper">
+      <ol class="day_numbers">
+
+      </ol>
+    </div>
+    <div class="categories">
+     
+      <div class="categories_wrapper">
+        <button class="categories_button button_color-purple" id="add_event">Add event</button>
+
+      </div>
+    </div>
+  </aside>
+</body>
+
+</html>
