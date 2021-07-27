@@ -8,11 +8,38 @@
   <title>Calendar</title>
   <link rel="stylesheet" type="text/css" href="Calendar_gridVersion.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet" />
+
+  <script src="month_dictionary.js" defer></script>
   <script src="Calendar.js" defer></script>
+  <script src="schedule.js" defer></script>
+  <script src="mySchedule.js" defer></script>
+  <script src="app.js" defer></script>
 </head>
 
 <body>
-  <main class="day_schedule_view"></main>
+  <main class="day_schedule_view">
+    <div class="schedule_header">
+      <h1 class="schedule_view-title"></h1>
+      <div class="schedule_view-buttons">
+        <button class="schedule_button ">
+          <img src="search.svg" width="36" height="36" alt="" class="schedule_button-search"> </button>
+        <button class="schedule_button ">
+          <img src="menu.svg" width="36" height="36" alt="" class="schedule_button-menu">
+          <!-- /*<img src="image.svg" width="200" height="200" alt="image description">*/ -->
+        </button>
+      </div>
+    </div>
+    <div class="schedule_view-body">
+      <div class="schedule_view-item">
+        <div class="schedule_view-events">
+          <div class="schedule_view-event-management"></div>
+          <div class="schedule_view-event-finance"></div>
+          <div class="schedule_view-event-design"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
   <aside class="month_view">
     <div class="month_picker">
       <div class="month_header">

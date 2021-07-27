@@ -1,32 +1,28 @@
-function Calendar() {
+function Calendar(day) {
   const currentDateTime = new Date();
-
-  this.months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
   this.state = {
     currentCalendarDate: new Date(),
     currentDate: new Date(
       currentDateTime.getFullYear(),
       currentDateTime.getMonth(),
-      currentDateTime.getDate()
+      currentDateTime.getDate(),
+      12
     ),
     daysOfCurrentMonth: [],
     daysOfPrevMonth: [],
     daysOfNextMonth: [],
   };
+
+  if (day) {
+    const [y, m, d] = day.split("-").map((s) => parseInt(s, 10));
+
+    if (y > 0 && m > 0 && d > 0) {
+      this.state.currentCalendarDate.setDate(d);
+      this.state.currentCalendarDate.setMonth(m - 1);
+      this.state.currentCalendarDate.setFullYear(y);
+    }
+  }
 
   this.renderCalendar();
   this.initControls();
@@ -55,13 +51,14 @@ Calendar.prototype.getDateOfCurrentMonth = function (
   return new Date(
     this.state.currentCalendarDate.getFullYear(),
     this.state.currentCalendarDate.getMonth() + monthShift,
-    dayNumber
+    dayNumber,
+    12
   );
 };
 
 Calendar.prototype.renderHeader = function () {
   const calendarHeader = `${
-    this.months[this.state.currentCalendarDate.getMonth()]
+    monthsDictionary[this.state.currentCalendarDate.getMonth()]
   } ${this.state.currentCalendarDate.getFullYear()}`;
 
   const headerEl = document.querySelector(".month_title");
@@ -79,7 +76,21 @@ Calendar.prototype.renderDate = function (date, container, className) {
   container.appendChild(li);
 
   a.innerHTML = date.getDate();
-  a.setAttribute("href", "#");
+  a.setAttribute("href", `?day=${date.toJSON().split("T")[0]}`);
+
+  if (
+    this.state.currentCalendarDate &&
+    this.compareDatesWithoutTime(this.state.currentCalendarDate, date)
+  ) {
+    li.classList.add("day_selected");
+  }
+};
+Calendar.prototype.compareDatesWithoutTime = function (date1, date2) {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
 };
 
 Calendar.prototype.renderDates = function () {
@@ -166,5 +177,3 @@ Calendar.prototype.initControls = function () {
     this.renderCalendar();
   }.bind(this);
 };
-
-const calendar = new Calendar();
