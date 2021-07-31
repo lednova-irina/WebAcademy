@@ -2,12 +2,7 @@ import { Event } from "./event.js";
 
 export class EventsStore {
   static _store = [
-    // new Event(
-    //   new Date(2021, 5, 9, 9, 0, 0, 0),
-    //   90,
-    //   "Meet Sophia in airport",
-    //   "finance"
-    // ),
+    
     // new Event(
     //   new Date(2021, 5, 9, 11, 0, 0, 0),
     //   120,
@@ -28,27 +23,25 @@ export class EventsStore {
 
   constructor() {}
 
- static createEvent(event) {
+  static createEvent(event) {
     EventsStore._store.push(
-      new Event(event.startDate, event.duration, event.text, event.category)
+      new Event(event.startDate, event.endTime, event.text, event.category)
     );
   }
 
-  editEvent(eventToEdit) {
+  static editEvent(eventToEdit) {
     const indexEl = EventsStore._store.findIndex(
       (e) => eventToEdit.key == e.key
     );
     EventsStore._store[indexEl].startDate = eventToEdit.startDate;
-    EventsStore._store[indexEl].duration = eventToEdit.duration;
+    EventsStore._store[indexEl].endTime = eventToEdit.duration;
     EventsStore._store[indexEl].text = eventToEdit.text;
     EventsStore._store[indexEl].category = eventToEdit.category;
   }
 
-  deleteEvent(eventToDelete) {
+  static deleteEvent(eventToDelete) {
     EventsStore._store = EventsStore._store.filter(
       (e) => eventToDelete.key !== e.key
     );
   }
 }
-
-

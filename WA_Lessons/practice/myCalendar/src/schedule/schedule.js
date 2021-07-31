@@ -17,10 +17,6 @@ export class Schedule {
     return this.state.day;
   }
 
-  getCurrentSchedule() {
-    return mySchedule[this.getCurrentId()];
-  }
-
   renderScheduleTitle() {
     const { currentDate } = this.state;
     const monthNum = currentDate.getMonth();
@@ -32,8 +28,8 @@ export class Schedule {
     titleEl.innerHTML = scheduleTitle;
   }
 
-  renderTime() {
-    const timeEl = document.querySelector(".schedule_view-item");
+  renderScheduleBody() {
+    const rootEl = document.querySelector(".schedule_view-body");
     const startShift = [
       "00.00",
       "01.00",
@@ -61,30 +57,30 @@ export class Schedule {
       "23.00",
     ];
     for (let t = 0; t < startShift.length; t++) {
-      const div1 = document.createElement("div");
-      timeEl.appendChild(div1);
-      div1.innerHTML = startShift[t];
-      div1.classList.add("schedule_view-time");
+      const descriptionEl = document.createElement("div");
+      rootEl.appendChild(descriptionEl);
+      descriptionEl.innerHTML = "";
+      descriptionEl.classList.add("schedule_view-item");
 
-      const div2 = document.createElement("div");
-      timeEl.appendChild(div2);
-      div2.innerHTML = "";
-      div2.classList.add("schedule_view-description");
+      const timeEl = document.createElement("div");
+      descriptionEl.appendChild(timeEl);
+      timeEl.innerHTML = startShift[t];
+      timeEl.classList.add("schedule_view-time");
     }
   }
 
   render() {
-    //const currentSchedule = this.getCurrentSchedule();
-
     this.renderScheduleTitle();
-    this.renderTime();
+    this.renderScheduleBody();
     this.renderEvents();
   }
 
   renderEvents() {
-    const eventEl = document.querySelector(".schedule_view-events");
+    const eventEl = document.querySelector(".schedule_view-body");
+
     EventsStore.Store.forEach((e) => {
-      eventEl.appendChild(e.generateUIElement());
+      e.removeFromUI();
+      eventEl.appendChild(e.generateUIElement(this.state.currentDate));
     });
   }
 }

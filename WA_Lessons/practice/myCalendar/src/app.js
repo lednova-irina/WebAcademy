@@ -12,4 +12,4 @@ const displayedDate = getDisplayedDate();
 const calendar = new Calendar(displayedDate);
 const schedule = new Schedule(displayedDate);
 
-const eventDialog = new EventDialog(calendar, schedule);
+window.eventDialog = new EventDialog(calendar, schedule);

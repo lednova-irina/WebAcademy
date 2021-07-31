@@ -170,6 +170,8 @@ export class Calendar {
     const prevButtonEl = document.querySelector(".month_button-previous");
     const nextButtonEl = document.querySelector(".month_button-next");
 
+    $("#add_event").on("click", () => window.eventDialog.dialog.dialog("open"));
+
     prevButtonEl.onclick = function () {
       this.state.currentCalendarDate.setMonth(
         this.state.currentCalendarDate.getMonth() - 1

@@ -6,7 +6,7 @@ export class EventDialog {
     this._schedule = schedule;
     this._calendar = calendar;
     this.startTime = $("#startTime");
-    this.duration = $("#duration");
+    this.endTime = $("#duration");
     this.text = $("#text");
     this.category = $("#category");
 
@@ -24,6 +24,15 @@ export class EventDialog {
       close: () => {
         this.form[0].reset();
       },
+      open: () => {
+        const existingEvent = $("#dialog-form").data("event");
+        if (existingEvent) {
+          this.startTime.val(existingEvent.startTime);
+          this.endTime.val(existingEvent.endTime);
+          this.text.val(existingEvent.text);
+          this.category.val(existingEvent.category);
+        }
+      },
     });
 
     this.form = this.dialog.find("form").on("submit", (sysEvent) => {
@@ -32,30 +41,40 @@ export class EventDialog {
     });
 
     this.category = $("#category").selectmenu();
-
-    $("#add_event").on("click", () => {
-      this.dialog.dialog("open");
-    });
   }
 
   saveEvent = () => {
-    const time = this.startTime.val().split(":");
-    const dateToSave = new Date(
+    const sTime = this.startTime.val().split(":");
+    const startEvent = new Date(
       this._calendar.selectedDate.getFullYear(),
       this._calendar.selectedDate.getMonth(),
       this._calendar.selectedDate.getDate(),
-      time[0],
-      time[1]
+      sTime[0],
+      sTime[1]
     );
 
-    EventsStore.createEvent(
-      new Event(
-        dateToSave,
-        this.duration.val(),
-        this.text.val(),
-        this.category.val()
-      )
+    const eTime = this.endTime.val().split(":");
+    const endEvent = new Date(
+      this._calendar.selectedDate.getFullYear(),
+      this._calendar.selectedDate.getMonth(),
+      this._calendar.selectedDate.getDate(),
+      eTime[0],
+      eTime[1]
     );
+    const existingEvent = $("#dialog-form").data("event");
+    const isEditMode = !!existingEvent;
+    const event = new Event(      
+      startEvent,
+      endEvent,
+      this.text.val(),
+      this.category.val()
+    );
+    if (!isEditMode) {
+      EventsStore.createEvent(event);
+    } else {
+      event.key = existingEvent.key;
+      EventsStore.editEvent(event);
+    }
 
     this._schedule.render();
 

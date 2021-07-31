@@ -28,18 +28,20 @@
 
     <form class="event_form">
       <fieldset>
-        <label for="startTime">Time</label>
-        <input type="time" name="startTime" id="startTime"  class="text ui-widget-content ui-corner-all">
-     
-        <label for="duration">Duration</label>
-        <input type="text" name="duration" id="duration" placeholder="00:00" class="text ui-widget-content ui-corner-all">
+        <label for="startTime">Start time</label>
+        <input type="time" name="startTime" id="startTime" class="text ui-widget-content ui-corner-all">
+
+        <label for="duration">End time</label>
+        <input type="time" name="duration" id="duration" placeholder="minutes"
+          class="text ui-widget-content ui-corner-all">
 
         <label for="text">Description</label>
         <input type="text" name="text" id="text" value="" placeholder="Put your description here"
           class="text ui-widget-content ui-corner-all">
-          
+
         <label for="category">Category</label>
         <select required name="category" id="category">
+          <option value="noCategory">No category</option>
           <option value="management">Management</option>
           <option value="finance">Finance</option>
           <option value="design">Design</option>
@@ -64,17 +66,13 @@
       </div>
     </div>
     <div class="schedule_view-body">
-      <div class="schedule_view-item">
-        <div class="schedule_view-events">
-          <!-- <div class="schedule_view-event-management"></div>
-          <div class="schedule_view-event-finance"></div>
-          <div class="schedule_view-event-design"></div> -->
-        </div>
-      </div>
+    </div>
+    </div>
     </div>
 
   </main>
   <aside class="month_view">
+    <div class="month_wrapper">
     <div class="month_picker">
       <div class="month_header">
         <button aria-label="Previous month" class="month_button month_button-previous">
@@ -108,12 +106,13 @@
       </ol>
     </div>
     <div class="categories">
-     
+
       <div class="categories_wrapper">
         <button class="categories_button button_color-purple" id="add_event">Add event</button>
 
       </div>
     </div>
+  </div>
   </aside>
 </body>
 
