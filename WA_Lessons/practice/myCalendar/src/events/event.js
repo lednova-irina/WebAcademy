@@ -32,10 +32,10 @@ export class Event {
     eventEl.style.height = `${duration}px`;
     eventEl.style.top = `${offsetTop}px`;
     eventEl.appendChild(deleteButtonEl);
-    // deleteButtonEl.innerHTML = "Delete";
+    deleteButtonEl.innerHTML = '<i class="far fa-trash-alt"></i>';
     deleteButtonEl.classList.add("delete_button-event");
     eventEl.appendChild(editButtonEl);
-    // editButtonEl.innerHTML = "Edit";
+    editButtonEl.innerHTML = '<i class="far fa-edit"></i>';
     editButtonEl.classList.add("edit_button-event");
 
     editButtonEl.onclick = () => {
@@ -43,21 +43,25 @@ export class Event {
     };
 
     deleteButtonEl.onclick = () => {
-      this.removeFromUI();
-      EventsStore.deleteEvent(this);
+      const isConfirmet = confirm("Are you sure?");
+      if (isConfirmet) {
+        this.removeFromUI();
+        EventsStore.deleteEvent(this);
+      }
     };
 
-    if (this.category == "finance") {
-      eventEl.classList.add("schedule_view-event-finance");
-    } else if (this.category == "management") {
-      eventEl.classList.add("schedule_view-event-management");
-    } else if (this.category == "design") {
-      eventEl.classList.add("schedule_view-event-design");
+    if (this.category == "reminder") {
+      eventEl.classList.add("schedule_view-event-reminder");
+    } else if (this.category == "task") {
+      eventEl.classList.add("schedule_view-event-task");
+    } else if (this.category == "birthday") {
+      eventEl.classList.add("schedule_view-event-birthday");
     }
     eventEl.append(this.text);
 
     return eventEl;
   }
+
   removeFromUI() {
     const elToDelete = document.getElementById(`event-${this.key}`);
     elToDelete && elToDelete.remove();
