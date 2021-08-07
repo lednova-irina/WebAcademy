@@ -9,11 +9,15 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="./styles/jquery-ui-1.12.1.custom/jquery-ui.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="./styles/calendar.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/event.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/month.schedule.css" />
+  <link rel="stylesheet" type="text/css" href="./styles/day.schedule.css" />
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet" />
   <link href="./fontawesome-free-5.15.3-web/css/all.css" rel="stylesheet">
 
 
 
+  <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="./src/shared/month.dictionary.js" type="module"></script>
@@ -22,6 +26,7 @@
   <script src="./src/events/event.dialog.js" type="module"></script>
   <script src="./src/schedule/schedule.js" type="module"></script>
   <script src="./src/calendar/calendar.js" type="module"></script>
+  <script src="./src/calendar/month.schedule.js" type="module"></script>
   <script src="./src/app.js" type="module"></script>
   <!-- <script src="./src/events/tooltip.js" defer></script> -->
 
@@ -82,15 +87,12 @@
       <div class="month_picker">
         <div class="month_header">
           <button aria-label="Previous month" class="month_button month_button-previous">
-            <svg role="image" aria-label="" class="month__btn-image" viewBox="0 0 20 38">
-              <path d="M19 1L1 19L19 37" />
-            </svg>
+            <i class="fas fa-chevron-left"></i>
           </button>
-          <div class="month_title">March 2018</div>
+          <div class="month_title"></div>
           <button aria-label="Next month" class="month_button month_button-next">
-            <svg role="image" aria-label="" class="month__btn-image month__btn-image--rotated" viewBox="0 0 20 38">
-              <path d="M19 1L1 19L19 37" />
-            </svg>
+            <i class="fas fa-chevron-right"></i>
+
           </button>
         </div>
         <div class="day_names-wrapper">
@@ -120,8 +122,35 @@
       </div>
     </div>
   </aside>
-  <article>
-    
+  <article class="month_schedule-view hidden">
+    <div class="month_schedule-header">
+      <button aria-label="Previous month" class="month_schedule-btn month_schedule_btn-previous">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="month_schedule-title">March 2018</div>
+      <button aria-label="Next month" class="month_schedule-btn month_schedule_btn-next">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    <div class="month_schedule-body">
+      <div class="month_schedule-day_names-wrapper">
+        <ol class="month_schedule-day_names">
+          <li class="month_schedule-day_name">Monday</li>
+          <li class="month_schedule-day_name">Tuesday</li>
+          <li class="month_schedule-day_name">Wednesday</li>
+          <li class="month_schedule-day_name">Thursday</li>
+          <li class="month_schedule-day_name">Friday</li>
+          <li class="month_schedule-day_name">Saturday</li>
+          <li class="month_schedule-day_name">Sunday</li>
+        </ol>
+      </div>
+      <div class="month_schedule-day_wrapper">
+        <ol class="month_schedule-days">
+
+        </ol>
+      </div>
+    </div>
+
   </article>
 </body>
 
