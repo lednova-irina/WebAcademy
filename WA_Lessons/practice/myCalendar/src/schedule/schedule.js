@@ -78,7 +78,11 @@ export class Schedule {
   renderEvents() {
     const eventEl = document.querySelector(".schedule_view-body");
 
-    EventsStore.Store.forEach((e) => {
+    EventsStore.Store.filter((e) => {
+      return (
+        moment(e.startDate).isSame(this.state.currentDate, 'day')
+      );
+    }).forEach((e) => {
       e.removeFromUI();
       eventEl.appendChild(e.generateUIElement(this.state.currentDate));
     });

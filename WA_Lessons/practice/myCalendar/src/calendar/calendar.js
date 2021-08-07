@@ -169,6 +169,18 @@ export class Calendar {
   initControls() {
     const prevButtonEl = document.querySelector(".month_button-previous");
     const nextButtonEl = document.querySelector(".month_button-next");
+    const menuButtonEl = document.querySelector(".schedule_button-menu");
+
+    menuButtonEl.onclick = function () {
+      const monthSchedule = document.querySelector(".month_schedule-view");
+      monthSchedule.classList.remove("hidden");
+
+      const daySchedule = document.querySelector(".day_schedule_view");
+      daySchedule.classList.add("hidden");
+
+      const calendar = document.querySelector(".month_view");
+      calendar.classList.add("hidden");
+    }.bind(this);
 
     $("#add_event").on("click", () => window.eventDialog.dialog.dialog("open"));
 

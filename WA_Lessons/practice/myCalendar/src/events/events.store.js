@@ -2,21 +2,7 @@ import { Event } from "./event.js";
 
 export class EventsStore {
   static _storeKey = "store";
-  static _store = null; // = [
-
-  // new Event(
-  //   new Date(2021, 5, 9, 11, 0, 0, 0),
-  //   120,
-  //   "Studio workshop",
-  //   "management"
-  // ),
-  // new Event(
-  //   new Date(2021, 5, 9, 17, 30, 0, 0),
-  //   150,
-  //   "Design workshop with Johny",
-  //   "management"
-  // ),
-  // ];
+  static _store = null; 
 
   static get Store() {
     if (EventsStore._store == null) {
