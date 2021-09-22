@@ -532,6 +532,6 @@ function crossGame(user) {
 crossGame.X = "X";
 crossGame.O = "O";
 
-const game = new crossGame(crossGame.O);
+const game = new crossGame(crossGame.X);
 game.init();
 game.startGame();
