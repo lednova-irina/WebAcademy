@@ -1,0 +1,26 @@
+footer {
+	box-sizing: border-box;
+	width: 100%;
+
+	position: relative;
+	bottom: 0;
+
+	font-size: 0.8rem;
+	line-height: 19px;
+
+	border-top: 1px solid #e8e8e8;
+
+}
+
+footer div {
+	margin: 0 5% 0 5%;
+	display: flex;
+	justify-content: flex-start;
+}
+
+footer div p:first-child {
+	font-weight: bold;
+	display: block;
+	padding-right: 5px;
+}
+
