@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./styles/header.css">
+    <link rel="stylesheet" type="text/css" href="./styles/main.css">
+    <link rel="stylesheet" type="text/css" href="./styles/article.css">
+    <link rel="stylesheet" type="text/css" href="./styles/footer.css">
+
+    <script src="./scripts/helpers/observer.js" type="module"></script>
+    <script src="./scripts/store/news-store.js" type="module"></script>
+    <script src="./scripts/services/news-service.js" type="module"></script>
+    <script src="./scripts/app.js" type="module"></script>
+    <script src="./scripts/pages/header.js" type="module"></script>
+    <script src="./scripts/pages/mainPage.js" type="module"></script>
+    <script src="./scripts/pages/newsItem.js" type="module"></script>
+    <script src="./scripts/pages/newsPage.js" type="module"></script>
+    <script src="./scripts/pages/articleItem.js" type="module"></script>
+
+
+    <title>News App</title>
+</head>
+
+<body>
+    <header>
+        <h1 class="header__name" id="main-title">News App</h1>
+        <div>
+            <form action="" method="get" class="header__search">
+                <button type="submit"></button>
+                <!-- <img class="header__search--img" src="./styles/img/search.svg" alt="search"> -->
+                <input placeholder="Type something to start search " type="search">
+
+            </form>
+        </div>
+        <div class="news__categories">
+            <div class="header__dropdown">
+                <button class="header__dropdownbtn">Categories
+                </button>
+                <div class="header__categories-list">
+                    <a href="" data-category="sport">Sport</a>
+                    <a href="" data-category="world">World</a>
+                    <a href="" data-category="covid">Covid</a>
+                    <a href="" data-category="business">Business</a>
+                    <a href="" data-category="politics">Politics</a>
+                    <a href="" data-category="science">Science</a>
+                    <a href="" data-category="religion">Religion</a>
+                    <a href="" data-category="health">Health</a>
+                </div>
+
+            </div>
+            <button class="header__btn" id="trending-news__btn" data-category="trending">⚡️ Trending News</button>
+        </div>
+        <div class="header__btn--toggle">
+            <!-- <svg class="header__burgermenu-btn hidden" width="14" height="14">
+                <line x1="1" y1="3" x2="14" y2="5"  stroke="black" stroke-width="1"/>
+                <line x1="1" y1="8" x2="14" y2="8" stroke="black" stroke-width="1"/>
+                <line x1="1" y1="12" x2="14" y2="12" stroke="black" stroke-width="1"/>
+            </svg>
+            <svg class="header__close-menu-btn" width="14" height="14">
+                <line x1="1" y1="1" x2="14" y2="14" stroke="black" stroke-width="1"/>
+                <line x1="1" y1="14" x2="14" y2="1" stroke="black" stroke-width="1"/>
+            </svg> -->
+            <input type="checkbox" id="toggle">
+            <label for="toggle"></label>
+        </div>
+    </header>
+    <main class="news__page">
+        <div class="top-news">
+
+        </div>
+        <div class="news-list">
+            <!-- <article class="news-list__item">
+                <h3 class="news-item__title"> </h3>
+                <img class="news-img" />
+                <p class="news-item__description"></p>
+                <time class="news-item__date"></time>
+                <button class="read-more__btn">Read more</button>
+            </article> -->
+        </div>
+        <div class="scroll__btn--wrapper">
+            <a href="#top" class="scroll__btn">Scroll to top</a>
+        </div>
+    </main>
+    <div class="article__page">
+        <!-- 
+     <article class="article-item">
+        <img class="article-img" />
+        <h3 class="article-item__title"> </h3>
+        <div class="article-item-data__wrapper">
+            <p class="article-writer"></p>
+         <time class="article-item__date"></time>
+        </div>
+        <article class="article-item__description"></article>
+     </article>
+       -->
+    </div>
+    <footer>
+        <div>
+            <p>News App </p>
+            <p> 2021 copyright all rights reserved</p>
+        </div>
+    </footer>
+</body>
+
+</html>
